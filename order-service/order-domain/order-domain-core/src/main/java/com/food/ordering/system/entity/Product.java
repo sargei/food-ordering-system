@@ -2,7 +2,9 @@ package com.food.ordering.system.entity;
 
 import com.food.ordering.system.valueobject.Money;
 import com.food.ordering.system.valueobject.ProductId;
+import lombok.Getter;
 
+@Getter
 public class Product extends BaseEntity<ProductId>
 {
     private String name;
