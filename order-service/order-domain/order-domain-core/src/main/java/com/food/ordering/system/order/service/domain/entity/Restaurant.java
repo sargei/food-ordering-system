@@ -7,6 +7,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
+
 public class Restaurant extends AggregateRoot<RestaurantId>
 {
     private List<Product> products;

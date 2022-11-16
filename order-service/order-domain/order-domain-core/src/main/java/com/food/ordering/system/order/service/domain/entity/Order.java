@@ -9,7 +9,6 @@ import com.food.ordering.system.order.service.domain.exception.OrderDomainExcept
 import com.food.ordering.system.order.service.domain.valueobject.OrderItemId;
 import com.food.ordering.system.order.service.domain.valueobject.StreetAddress;
 import com.food.ordering.system.order.service.domain.valueobject.TrackingId;
-import com.food.ordering.system.valueobject.*;
 import lombok.Getter;
 
 import java.util.List;
