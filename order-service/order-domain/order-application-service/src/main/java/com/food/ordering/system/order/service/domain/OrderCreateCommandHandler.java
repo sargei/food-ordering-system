@@ -13,6 +13,7 @@ import com.food.ordering.system.order.service.domain.ports.output.repository.Ord
 import com.food.ordering.system.order.service.domain.ports.output.repository.RestaurantRepository;
 import com.food.ordering.system.order.service.domain.mapper.OrderDataMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,13 +30,20 @@ public class OrderCreateCommandHandler
     private final RestaurantRepository restaurantRepository;
     private final OrderDataMapper orderDataMapper;
 
-    public OrderCreateCommandHandler(OrderDomainService orderDomainService, OrderRepository orderRepository, CustomerRepository customerRepository, RestaurantRepository restaurantRepository, OrderDataMapper orderDataMapper)
+    private final ApplicationDomainEventPublisher applicationDomainEventPublisher;
+    public OrderCreateCommandHandler(OrderDomainService orderDomainService,
+                                     OrderRepository orderRepository,
+                                     CustomerRepository customerRepository,
+                                     RestaurantRepository restaurantRepository,
+                                     OrderDataMapper orderDataMapper,
+                                     ApplicationDomainEventPublisher applicationDomainEventPublisher)
     {
         this.orderDomainService = orderDomainService;
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.restaurantRepository = restaurantRepository;
         this.orderDataMapper = orderDataMapper;
+        this.applicationDomainEventPublisher = applicationDomainEventPublisher;
     }
 
     @Transactional
@@ -46,6 +54,7 @@ public class OrderCreateCommandHandler
         Order order =orderDataMapper.createOrderCommandToOrder(createOrderCommand);
         OrderCreatedEvent orderCreateEvent= orderDomainService.validateAndInitiateOrder(order, restaurant);
         Order orderResult = saveOrder(order);
+        applicationDomainEventPublisher.publish(orderCreateEvent);
         return orderToCreateOrderResponse(orderResult);
     }
 
