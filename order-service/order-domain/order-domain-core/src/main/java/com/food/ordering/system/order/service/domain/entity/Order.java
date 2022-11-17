@@ -1,10 +1,7 @@
 package com.food.ordering.system.order.service.domain.entity;
 
 import com.food.ordering.system.domain.entity.AggregateRoot;
-import com.food.ordering.system.domain.valueobject.CustomerId;
-import com.food.ordering.system.domain.valueobject.Money;
-import com.food.ordering.system.domain.valueobject.OrderId;
-import com.food.ordering.system.domain.valueobject.OrderStatus;
+import com.food.ordering.system.domain.valueobject.*;
 import com.food.ordering.system.order.service.domain.exception.OrderDomainException;
 import com.food.ordering.system.order.service.domain.valueobject.OrderItemId;
 import com.food.ordering.system.order.service.domain.valueobject.StreetAddress;
@@ -22,10 +19,13 @@ public class Order extends AggregateRoot<OrderId>
    private final StreetAddress deliveryAddress;
    private final Money price;
    private final List<OrderItem> items;
+   private final RestaurantId restaurantId;
 
    private TrackingId trackingId;
    private OrderStatus orderStatus;
    private List<String> failureMessages;
+
+
 
    private Order(Builder builder)
    {
@@ -38,6 +38,7 @@ public class Order extends AggregateRoot<OrderId>
       trackingId = builder.trackingId;
       orderStatus = builder.orderStatus;
       failureMessages = builder.failureMessages;
+      restaurantId = builder.restaurantId;
    }
 
    public void initializeOrder()
@@ -153,6 +154,8 @@ public class Order extends AggregateRoot<OrderId>
       private OrderStatus orderStatus;
       private List<String> failureMessages;
 
+      private RestaurantId restaurantId;
+
       private Builder()
       {
       }
@@ -177,6 +180,12 @@ public class Order extends AggregateRoot<OrderId>
       public Builder orderId(OrderId val)
       {
          orderId = val;
+         return this;
+      }
+
+      public Builder restaurantId(RestaurantId val)
+      {
+         restaurantId = val;
          return this;
       }
 
