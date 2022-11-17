@@ -56,11 +56,19 @@ public class OrderDataMapper
 
     private StreetAddress orderAdressToStreetAddress(OrderAddress orderAddress)
     {
-        return new StreetAddress((
+        return new StreetAddress(
                 UUID.randomUUID(),
                 orderAddress.getStreet(),
                 orderAddress.getPostalCode(),
                 orderAddress.getCity()
-                ));
+                );
+    }
+
+    public CreateOrderResponse orderToCreateOrderResponse(Order order)
+    {
+        return CreateOrderResponse.builder()
+                .orderTrackingId(order.getTrackingId().getValue())
+                .orderStatus(order.getOrderStatus())
+                .build();
     }
 }
