@@ -40,7 +40,7 @@ public class OrderCreateCommandHandler
         OrderCreatedEvent orderCreatedEvent = orderCreateHelper.persiOrderCreatedEvent(createOrderCommand);
         log.info("Order is created with id {} ", orderCreatedEvent.getOrder().getOrderId().getValue());
         orderCreatePaymentRequestMessagePublisher.publish(orderCreatedEvent);
-        return  orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder());
+        return  orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder(), "Order created successfully");
     }
 
 
